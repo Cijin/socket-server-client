@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
 
-  if ((res = getaddrinfo(NULL, PORT, &hints, &serverinfo)) == 0) {
+  if ((res = getaddrinfo(NULL, PORT, &hints, &serverinfo)) != 0) {
     printf("getaddrinfo error: %s\n", gai_strerror(res));
     exit(EXIT_ERROR);
   }
@@ -47,14 +47,16 @@ int main(int argc, char *argv[]) {
       perror("client: connect");
       continue;
     }
+
+    break;
   }
 
   if (p == NULL) {
-    printf("Error: server unable to bind\n");
+    printf("Error: client unable to connect\n");
     exit(EXIT_ERROR);
   }
 
-  inet_ntop(sockfd, get_in_addr((struct sockaddr *)&p), s, sizeof(s));
+  inet_ntop(sockfd, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof(s));
 
   printf("Client: connecting to %s\n", s);
 

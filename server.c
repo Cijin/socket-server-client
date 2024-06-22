@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
 
-  if ((res = getaddrinfo(NULL, PORT, &hints, &serverinfo)) == 0) {
+  if ((res = getaddrinfo(NULL, PORT, &hints, &serverinfo)) != 0) {
     printf("getaddrinfo error: %s\n", gai_strerror(res));
     exit(EXIT_ERROR);
   }
@@ -69,6 +69,8 @@ int main(int argc, char *argv[]) {
       perror("bind");
       continue;
     }
+
+    break;
   }
 
   freeaddrinfo(serverinfo);
