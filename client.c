@@ -56,7 +56,8 @@ int main(int argc, char *argv[]) {
     exit(EXIT_ERROR);
   }
 
-  inet_ntop(sockfd, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof(s));
+  inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s,
+            sizeof(s));
 
   printf("Client: connecting to %s\n", s);
 
