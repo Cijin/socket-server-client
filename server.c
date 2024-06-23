@@ -112,9 +112,10 @@ int main(int argc, char *argv[]) {
 
       if (send(cfd, MSG, msglen, 0) == -1) {
         perror("send");
-        close(cfd);
-        exit(0);
       }
+
+      close(cfd);
+      exit(0);
     }
 
     close(cfd);
